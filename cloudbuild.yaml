@@ -1,9 +1,12 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/react-run', '.']
+    args: ['build','-t', 'react-test', '-f', 'Dockerfile.dev', '.']
   
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['run', 'gcr.io/$PROJECT_ID/react-run', 'npm', 'run', 'test', '--', '--coverage']
+    args: ['run', 'react-test', 'npm', 'run', 'test', '--', '--coverage']
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/react-run', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/react-run']
